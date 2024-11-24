@@ -1,7 +1,7 @@
 <template>
 
   <div style="background-color: var(--darker); color: var(--lighter);">
-    <NavigationBar class="fixed z-50" style="backdrop-filter: blur(2px);" />
+    <NavigationBar class="fixed z-10" style="backdrop-filter: blur(2px);" />
     <RouterView />
   </div>
 

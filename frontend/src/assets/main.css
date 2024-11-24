@@ -8,6 +8,10 @@
   color: var(--secondary);
 }
 
+.form-control:focus {
+  outline: none;
+}
+
 .button {
   display: inline-block;
   padding: 0.5rem 0.75rem;

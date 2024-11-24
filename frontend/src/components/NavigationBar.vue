@@ -5,13 +5,42 @@
       <div class="me-auto">
         <RouterLink :to="{name: 'home'}" class="nav-button">Home</RouterLink>
       </div>
-      <div>
+      <div v-if="!authStore.token">
+        <RouterLink :to="{name: 'login'}" class="nav-button">Login</RouterLink>
         <RouterLink :to="{name: 'register'}" class="nav-button">Register</RouterLink>
       </div>
+      <form v-else @submit.prevent="handleLogout">
+        <button type="submit" class="nav-button" style="background-color: var(--yellow); color: var(--darker); font-weight: unset;">Logout<span class="ms-2">&rarr;</span></button>
+      </form>
     </nav>
   </div>
 
 </template>
+
+<script setup>
+  
+  import router from '@/router';
+  import useAuthStore from '@/stores/authStore';
+
+  const authStore = useAuthStore();
+
+  async function handleLogout() {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/logout", {
+        method: "POST",
+        headers: {"Accept": "application/json", "Authorization": `Bearer ${authStore.token}`}
+      });
+
+      if (response.ok) {
+        authStore.setToken(null);
+        router.push({name: "home"});
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+</script>
 
 <style scoped>
 

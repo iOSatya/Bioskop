@@ -1,13 +1,13 @@
 <template>
 
   <div class="flex flex-col justify-center items-center min-h-screen">
-    <RegisterForm />
+    <LoginForm />
   </div>
   
 </template>
 
 <script setup>
 
-  import RegisterForm from '@/components/RegisterForm.vue';
+  import LoginForm from '@/components/LoginForm.vue';
 
 </script>
