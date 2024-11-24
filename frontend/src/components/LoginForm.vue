@@ -16,9 +16,11 @@
 
   import router from '@/router';
   import useAuthStore from '@/stores/auth';
+  import useLoadingStore from '@/stores/loading';
   import { ref } from 'vue';
 
   const authStore = useAuthStore();
+  const loadingStore = useLoadingStore();
 
   const email = ref("");
   const password = ref("");
@@ -40,6 +42,7 @@
   }
 
   async function submitLoginForm() {
+    loadingStore.startLoading();
     try {
       const response = await sendLoginForm(grabLoginForm());
       const responseData = await response.json();
@@ -55,7 +58,7 @@
       message.value = "Something Went Wrong";
       console.log(error);
     }
-
+    loadingStore.stopLoading();
   }
 
 </script>

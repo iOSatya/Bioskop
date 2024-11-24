@@ -1,9 +1,9 @@
 <template>
-
+  
   <div class="flex flex-col justify-center items-center min-h-screen">
     <LoginForm />
   </div>
-  
+
 </template>
 
 <script setup>

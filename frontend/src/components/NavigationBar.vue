@@ -21,10 +21,13 @@
   
   import router from '@/router';
   import useAuthStore from '@/stores/auth';
+import useLoadingStore from '@/stores/loading';
 
   const authStore = useAuthStore();
+  const loadingStore = useLoadingStore();
 
   async function handleLogout() {
+    loadingStore.startLoading();
     try {
       const response = await fetch("http://127.0.0.1:8000/api/logout", {
         method: "POST",
@@ -38,6 +41,7 @@
     } catch (error) {
       console.log(error);
     }
+    loadingStore.stopLoading();
   }
 
 </script>
