@@ -1,7 +1,7 @@
 <template>
 
   <div style="background-color: var(--darker); color: var(--lighter);">
-    <LoadingScreen v-if="isLoading.loading" />
+    <LoadingScreen v-if="isLoading.state" />
     <NavigationBar class="fixed z-10" style="backdrop-filter: blur(2px);" />
     <RouterView />
   </div>

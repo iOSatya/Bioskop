@@ -2,16 +2,24 @@
 
   <div class="flex flex-row justify-center items-center w-screen">
     <nav class="flex flex-row" style="width: 80vw;">
-      <div class="me-auto">
+
+      <div v-if="authStore.accountStatus !== 'admin'" class="me-auto">
         <RouterLink :to="{name: 'home'}" class="nav-button">Home</RouterLink>
       </div>
+
+      <div v-else-if="authStore.accountStatus == 'admin'" class="me-auto">
+        <RouterLink :to="{name: 'admin-home'}" class="nav-button">Home</RouterLink>
+      </div>
+
       <div v-if="!authStore.token">
         <RouterLink :to="{name: 'login'}" class="nav-button">Login</RouterLink>
         <RouterLink :to="{name: 'register'}" class="nav-button">Register</RouterLink>
       </div>
+
       <form v-else @submit.prevent="handleLogout">
-        <button type="submit" class="nav-button" style="background-color: var(--yellow); color: var(--darker); font-weight: unset;">Logout<span class="ms-2">&rarr;</span></button>
+        <button type="submit" class="nav-button glow" style="background-color: var(--yellow); color: var(--darker); font-weight: unset;">Logout<span class="ms-2">&rarr;</span></button>
       </form>
+
     </nav>
   </div>
 
@@ -21,7 +29,7 @@
   
   import router from '@/router';
   import useAuthStore from '@/stores/auth';
-import useLoadingStore from '@/stores/loading';
+  import useLoadingStore from '@/stores/loading';
 
   const authStore = useAuthStore();
   const loadingStore = useLoadingStore();
@@ -36,6 +44,7 @@ import useLoadingStore from '@/stores/loading';
 
       if (response.ok) {
         authStore.setToken(null);
+        authStore.setAccountStatus(null);
         router.push({name: "home"});
       }
     } catch (error) {
@@ -62,6 +71,10 @@ import useLoadingStore from '@/stores/loading';
 
   .nav-button:hover {
     color: var(--secondary);
+  }
+
+  .glow:hover {
+    filter: brightness(1.1);
   }
 
 </style>

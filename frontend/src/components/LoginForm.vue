@@ -49,7 +49,14 @@
 
       if (response.ok) {
         authStore.setToken(responseData.token);
-        router.push({name: "home"});
+        authStore.setAccountStatus(responseData.account_status);
+
+        if (authStore.accountStatus == 'admin') {
+          router.push({name: "admin-home"});
+        } else {
+          router.push({name: "home"});
+        }
+        
       } else {
         message.value = responseData.message;
       }
