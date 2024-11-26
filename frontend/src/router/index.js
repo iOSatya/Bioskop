@@ -4,8 +4,9 @@ import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
 import AdminHomeView from '@/views/AdminHomeView.vue'
 import UnauthorizedView from '@/views/UnauthorizedView.vue'
+import useAuthStore from '@/stores/auth'
 
-// const isAdmin = localStorage.getItem("accountStatus");
+const authStore = () => useAuthStore();
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,25 +16,24 @@ const router = createRouter({
     {path: "/login", name: "login", component: LoginView},
     {path: "/unauthorized", name: "unauthorized", component: UnauthorizedView},
 
-    {path: "/admin", children: [
+    {path: "/admin", meta: {adminAuth: true}, children: [
       {path: "", name: "admin-home", component: AdminHomeView}
     ]}
   ],
 })
 
-// router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
 
-//   console.log(isAdmin);
-//   if (to.meta.adminAuth) {
-//     if (isAdmin == "admin") {
-//       next();
-//     } else {
-//       router.push({name: "unauthorized"});
-//     }
-//   } else {
-//     next();
-//   }
+  if (to.meta.adminAuth) {
+    if (authStore().accountStatus == "admin") {
+      next();
+    } else {
+      next({name: "unauthorized"});
+    }
+  } else {
+    next();
+  }
 
-// });
+});
 
 export default router
