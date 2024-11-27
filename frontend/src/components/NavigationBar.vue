@@ -9,6 +9,7 @@
 
       <div v-else-if="authStore.accountStatus == 'admin'" class="me-auto">
         <RouterLink :to="{name: 'admin-home'}" class="nav-button">Home</RouterLink>
+        <RouterLink :to="{name: 'add'}" class="nav-button">Add</RouterLink>
       </div>
 
       <div v-if="!authStore.token">
@@ -50,14 +51,14 @@
     } catch (error) {
       console.log(error);
     }
-    loadingStore.stopLoading();
+    loadingStore.endLoading();
   }
 
 </script>
 
 <style scoped>
 
-  a.router-link-active {
+  a.router-link-exact-active {
     border-bottom-color: var(--lighter);
   }
 

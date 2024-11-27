@@ -65,7 +65,7 @@
       message.value = "Something Went Wrong";
       console.log(error);
     }
-    loadingStore.stopLoading();
+    loadingStore.endLoading();
   }
 
 </script>

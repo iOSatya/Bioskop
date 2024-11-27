@@ -16,6 +16,8 @@
 
 <script setup>
 
+  import useAuthStore from '@/stores/auth';
+import useLoadingStore from '@/stores/loading';
   import { ref } from 'vue';
 
   const name = ref("");
@@ -23,6 +25,8 @@
   const password = ref("");
   const password_confirmation = ref("");
   const message = ref("");
+
+  const loadingStore = useLoadingStore();
 
   function grabRegisterForm() {
     return JSON.stringify({
@@ -42,6 +46,7 @@
   }
 
   async function submitRegisterForm() {
+    loadingStore.startLoading();
     try {
       const response = await sendRegisterForm(grabRegisterForm());
       const responseData = await response.json()
@@ -50,6 +55,7 @@
       message.value = "Something Went Wrong";
       console.log(error);
     }
+    loadingStore.endLoading();
   }
 
 </script>

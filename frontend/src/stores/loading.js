@@ -8,12 +8,12 @@ const useLoadingStore = defineStore("loading", () => {
     state.value = true;
   }
 
-  function stopLoading() {
+  function endLoading() {
     state.value = false;
   }
 
   return {
-    state, startLoading, stopLoading
+    state, startLoading, endLoading
   }
 
 });
