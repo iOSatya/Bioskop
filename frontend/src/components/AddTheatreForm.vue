@@ -11,9 +11,9 @@
     </div>
     <div class="w-full h-full flex flex-col justify-center items-center">
       <div class="flex flex-row">
-        <div v-for="(rowIndex) in rows" class="flex flex-col">
-          <div v-for="(columnIndex) in columns">
-            <div class="w-10 h-10 bg-white m-1" style="color: var(--darker);">{{ columnIndex }}-{{ rowIndex }}</div>
+        <div v-for="(columnIndex) in columns" class="flex flex-col">
+          <div v-for="(rowIndex) in rows">
+            <div class="w-10 h-10 bg-white m-1" style="color: var(--darker);">{{ rowIndex }}-{{ columnIndex }}</div>
           </div>
         </div>
       </div>
