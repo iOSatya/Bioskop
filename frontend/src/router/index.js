@@ -5,7 +5,8 @@ import LoginView from '@/views/LoginView.vue'
 import AdminHomeView from '@/views/AdminHomeView.vue'
 import UnauthorizedView from '@/views/UnauthorizedView.vue'
 import useAuthStore from '@/stores/auth'
-import AdminAddView from '@/views/AdminAddView.vue'
+import AddTheatreView from '@/views/AddTheatreView.vue'
+import AddMovieView from '@/views/AddMovieView.vue'
 
 const authStore = () => useAuthStore();
 
@@ -18,8 +19,11 @@ const router = createRouter({
     {path: "/unauthorized", name: "unauthorized", component: UnauthorizedView},
 
     {path: "/admin", meta: {adminAuth: true}, children: [
-      {path: "", name: "admin-home", component: AdminHomeView},
-      {path: "add", name: "add", component: AdminAddView}
+      {path: "home", name: "admin-home", component: AdminHomeView},
+      {path: "add", name: "add", redirect: {name: "add-theatre"}, children: [
+        {path: "theatre", name: "add-theatre", component: AddTheatreView},
+        {path: "movie", name: "add-movie", component: AddMovieView}
+      ]}
     ]}
   ],
 })

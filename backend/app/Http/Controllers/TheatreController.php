@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Theatre;
+use Exception;
 use Illuminate\Http\Request;
 
 class TheatreController extends Controller
@@ -12,7 +13,7 @@ class TheatreController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(["theatre" => Theatre::all()], 200);
     }
 
     /**
@@ -20,25 +21,30 @@ class TheatreController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            "theatre_name" => ["required"],
-            "rows" => ["required", "integer"],
-            "columns" => ["required", "integer"],
-        ]);
-
-        $seats = [];
-
-        for ($row = 1; $row <= $data["rows"]; $row++) {
-            for ($column = 1; $column <= $data["columns"]; $column++) {
-                $seats[$row][$column] = false;
-            }
+        try {
+            $data = $request->validate([
+                "theatre_name" => ["required"],
+                "rows" => ["required", "integer"],
+                "columns" => ["required", "integer"],
+            ]);
+    
+            // $seats = [];
+    
+            // for ($row = 1; $row <= $data["rows"]; $row++) {
+            //     for ($column = 1; $column <= $data["columns"]; $column++) {
+            //         $seats[$row][$column] = false;
+            //     }
+            // }
+    
+            // $data["seats"] = $seats;
+    
+            Theatre::create($data);
+    
+            return response()->json(["message" => "Theatre Added Successfully"], 201);
+        } catch (Exception $error) {
+            return response()->json(["message" => $error->getMessage()], 400);
         }
 
-        $data["seats"] = $seats;
-
-        Theatre::create($data);
-
-        return response()->json(["message" => "Theatre Added Successfully"], 201);
     }
 
     /**

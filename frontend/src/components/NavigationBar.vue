@@ -1,6 +1,6 @@
 <template>
 
-  <div class="flex flex-row justify-center items-center w-screen">
+  <header class="flex flex-row justify-center items-center w-screen">
     <nav class="flex flex-row" style="width: 80vw;">
 
       <div v-if="authStore.accountStatus !== 'admin'" class="me-auto">
@@ -22,7 +22,7 @@
       </form>
 
     </nav>
-  </div>
+  </header>
 
 </template>
 
@@ -58,7 +58,7 @@
 
 <style scoped>
 
-  a.router-link-exact-active {
+  a.router-link-active {
     border-bottom-color: var(--lighter);
   }
 

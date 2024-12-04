@@ -14,11 +14,10 @@ class Theatre extends Model
         "theatre_name",
         "rows",
         "columns",
-        "seats"
     ];
 
-    protected $casts = [
-        "seats" => "array"
-    ];
+    // protected $casts = [
+    //     "seats" => "array"
+    // ];
     
 }
