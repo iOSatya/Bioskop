@@ -30,7 +30,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
-  // Checking user if they are authorized to access "/admin"
+  // Cek user apakah punya otoritas untuk akses "/admin"
   if (to.meta.adminAuth) {
     if (authStore().accountStatus == "admin") {
       next();
