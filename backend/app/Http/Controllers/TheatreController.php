@@ -28,16 +28,6 @@ class TheatreController extends Controller
                 "columns" => ["required", "integer"],
             ]);
     
-            // $seats = [];
-    
-            // for ($row = 1; $row <= $data["rows"]; $row++) {
-            //     for ($column = 1; $column <= $data["columns"]; $column++) {
-            //         $seats[$row][$column] = false;
-            //     }
-            // }
-    
-            // $data["seats"] = $seats;
-    
             Theatre::create($data);
     
             return response()->json(["message" => "Theatre Added Successfully"], 201);

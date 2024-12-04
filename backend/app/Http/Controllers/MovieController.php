@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Movie;
+use App\Models\Theatre;
+use Exception;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -19,7 +22,32 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        try {
+            $data = $request->validate([
+                "theatre_id" => ["required"],
+                "title" => ["required"],
+                "genre" => ["required"],
+                "start" => ["required"],
+                "end" => ["required"],
+            ]);
+
+            $theatre = Theatre::where("id", $request->theatre_id)->first();
+
+            $data["seats"] = [];
+
+            for ($row = 1; $row <= $theatre["rows"]; $row++) {
+                for ($column = 1; $column <= $theatre["columns"]; $column++) {
+                    $data["seats"][$row][$column] = false;
+                }
+            }
+
+            Movie::create($data);
+
+            return response()->json(["message" => "Movie Added Successfully"], 201);
+
+        } catch (Exception $error) {
+            return response()->json(["message" => $error->getMessage()], 400);
+        }
     }
 
     /**
