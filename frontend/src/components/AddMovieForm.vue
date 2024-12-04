@@ -1,7 +1,7 @@
 <template>
 
   <div>
-    <form class="flex flex-col justify-center">
+    <form @submit.prevent="submitMovieForm" class="flex flex-col justify-center">
       <label style="color: var(--secondary);">Title</label>
       <input v-model="title" type="text" class="form-control mb-4">
 
