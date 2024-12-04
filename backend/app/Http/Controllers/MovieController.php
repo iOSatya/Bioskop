@@ -14,7 +14,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(["movies" => Movie::all()], 200);
     }
 
     /**

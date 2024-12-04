@@ -8,14 +8,14 @@
       <label style="color: var(--secondary);">Genre</label>
       <div class="mb-4">
         <p @click="genreOpen = !genreOpen" class="form-control select">{{ genre || "Select" }}</p>
-        <p v-if="genreOpen" @click="() => {genreOpen = !genreOpen; genre = 'Horror'}" class="form-control select">Horror</p>
         <p v-if="genreOpen" @click="() => {genreOpen = !genreOpen; genre = 'Action'}" class="form-control select">Action</p>
         <p v-if="genreOpen" @click="() => {genreOpen = !genreOpen; genre = 'Comedy'}" class="form-control select">Comedy</p>
+        <p v-if="genreOpen" @click="() => {genreOpen = !genreOpen; genre = 'Horror'}" class="form-control select">Horror</p>
       </div>
       <label style="color: var(--secondary);">Theatre</label>
       <div class="mb-4">
         <p @click="theatreOpen = !theatreOpen" class="form-control select">{{ theatreName || "Select" }}</p>
-        <p v-for="theatre in theatreList" v-if="theatreOpen" @click="() => {theatreOpen = !theatreOpen; theatre_id = theatre.id; theatreName = theatre.theatre_name}" class="form-control select">{{ theatre.theatre_name }}</p>
+        <p v-for="theatre in theatreList" v-if="theatreOpen" :key="theatre.id" @click="() => {theatreOpen = !theatreOpen; theatre_id = theatre.id; theatreName = theatre.theatre_name}" class="form-control select">{{ theatre.theatre_name }}</p>
       </div>
 
       <div class="flex flex-row justify-stretch mb-4">
@@ -61,12 +61,12 @@
   async function getTheatreList() {
     loadingStore.startLoading();
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/theatre", {
+      const response = await fetch("http://127.0.0.1:8000/api/theatres", {
         method: "GET",
         headers: {"Accept": "application/json"}
       });
       const responseData = await response.json();
-      theatreList.value = responseData.theatre;
+      theatreList.value = responseData.theatres;
     } catch (error) {
       console.log(error);
     }
@@ -84,7 +84,7 @@
   }
 
   function sendMovieForm(data) {
-    return fetch("http://127.0.0.1:8000/api/movie", {
+    return fetch("http://127.0.0.1:8000/api/movies", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: data

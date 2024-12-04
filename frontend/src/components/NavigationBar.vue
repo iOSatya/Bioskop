@@ -5,6 +5,7 @@
 
       <div v-if="authStore.accountStatus !== 'admin'" class="me-auto">
         <RouterLink :to="{name: 'home'}" class="nav-button">Home</RouterLink>
+        <RouterLink :to="{name: 'movies'}" class="nav-button">Movies</RouterLink>
       </div>
 
       <div v-else-if="authStore.accountStatus == 'admin'" class="me-auto">

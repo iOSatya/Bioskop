@@ -10,5 +10,5 @@ Route::post("/register", [AuthController::class, "register"]);
 Route::post("/login", [AuthController::class, "login"]);
 Route::post("/logout", [AuthController::class, "logout"])->middleware("auth:sanctum");
 
-Route::apiResource("theatre", TheatreController::class);
-Route::apiResource("movie", MovieController::class);
+Route::apiResource("theatres", TheatreController::class);
+Route::apiResource("movies", MovieController::class);

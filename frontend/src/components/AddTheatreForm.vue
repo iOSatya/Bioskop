@@ -48,7 +48,7 @@
   }
 
   function sendAddTheatreForm(data) {
-    return fetch("http://127.0.0.1:8000/api/theatre", {
+    return fetch("http://127.0.0.1:8000/api/theatres", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: data

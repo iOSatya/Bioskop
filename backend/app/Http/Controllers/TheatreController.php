@@ -13,7 +13,7 @@ class TheatreController extends Controller
      */
     public function index()
     {
-        return response()->json(["theatre" => Theatre::all()], 200);
+        return response()->json(["theatres" => Theatre::all()], 200);
     }
 
     /**
