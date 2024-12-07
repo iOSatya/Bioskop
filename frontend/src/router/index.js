@@ -8,6 +8,7 @@ import useAuthStore from '@/stores/auth'
 import AddTheatreView from '@/views/AddTheatreView.vue'
 import AddMovieView from '@/views/AddMovieView.vue'
 import MoviesView from '@/views/MoviesView.vue'
+import OrderMovieView from '@/views/OrderMovieView.vue'
 
 const authStore = () => useAuthStore();
 
@@ -15,7 +16,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {path: '/', name: 'home', component: HomeView},
-    {path: "/movies", name: "movies", component: MoviesView},
+    {path: "/movies", children: [
+      {path: "", name: "movies", component: MoviesView},
+      {path: "order", name: "movies-order", component: OrderMovieView}
+    ]},
     {path: "/register", name: "register", component: RegisterView},
     {path: "/login", name: "login", component: LoginView},
     {path: "/unauthorized", name: "unauthorized", component: UnauthorizedView},
