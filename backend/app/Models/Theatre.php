@@ -15,9 +15,5 @@ class Theatre extends Model
         "rows",
         "columns",
     ];
-
-    // protected $casts = [
-    //     "seats" => "array"
-    // ];
     
 }
