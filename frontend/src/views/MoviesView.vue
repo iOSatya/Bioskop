@@ -7,12 +7,13 @@
       <hr class="mt-4 mb-4" style="border-color: var(--secondary);">
       <swiper-container slides-per-view="3" space-between="10" free-mode="true" class="w-full">
         <swiper-slide v-for="movie in movieList" :key="movie.id" class="flex flex-col justify-center">
-          <div class="flex flex-col justify-center items-center h-96 mb-2" style="border: 1px solid var(--lighter);">
+          <div class="flex flex-col justify-center items-center h-96 mb-1 rounded-t-lg" style="border: 1px solid var(--lighter);">
             <p>{{ movie.title }}</p>
           </div>
-          <div class="flex flex-row justify-start items-center p-4" style="border: 1px solid var(--yellow);">
+          <div class="flex flex-row justify-start items-center rounded-b-xl p-4" style="border: 1px solid var(--yellow);">
             <p>{{ movie.start }}.00 - {{ movie.end }}.00</p>
-            <RouterLink to="/movies/order" class="ms-auto">Order</RouterLink>
+            <RouterLink v-if="authStore.token" to="/movies/order" class="ms-auto">Order</RouterLink>
+            <RouterLink v-else :to="{name: 'login'}" class="ms-auto">Order</RouterLink>
           </div>
         </swiper-slide>
       </swiper-container>
@@ -24,6 +25,7 @@
 
 <script setup>
 
+  import useAuthStore from '@/stores/auth';
   import useLoadingStore from '@/stores/loading';
   import { onMounted, ref } from 'vue';
 
@@ -32,6 +34,7 @@
   });
 
   const loadingStore = useLoadingStore();
+  const authStore = useAuthStore();
 
   const movieList = ref([]);
 
