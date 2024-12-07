@@ -12,7 +12,7 @@
           </div>
           <div class="flex flex-row justify-start items-center rounded-b-xl p-4" style="border: 1px solid var(--yellow);">
             <p>{{ movie.start }}.00 - {{ movie.end }}.00</p>
-            <RouterLink v-if="authStore.token" :to="{name: 'movies-order'}" class="ms-auto">Order</RouterLink>
+            <RouterLink v-if="authStore.token" :to="{name: 'movies-order', params: {id: movie.id}}" class="ms-auto">Order</RouterLink>
             <RouterLink v-else :to="{name: 'login'}" class="ms-auto">Order</RouterLink>
           </div>
         </swiper-slide>

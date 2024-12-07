@@ -1,7 +1,15 @@
 <template>
 
   <div>
-    Order Movie
+    Movie ID: {{ id }}
   </div>
 
 </template>
+
+<script setup>
+
+  defineProps({
+    id: String
+  });
+
+</script>

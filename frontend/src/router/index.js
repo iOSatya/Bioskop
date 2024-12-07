@@ -18,7 +18,7 @@ const router = createRouter({
     {path: '/', name: 'home', component: HomeView},
     {path: "/movies", children: [
       {path: "", name: "movies", component: MoviesView},
-      {path: "order", name: "movies-order", component: OrderMovieView}
+      {path: "order/:id", name: "movies-order", props: true, component: OrderMovieView}
     ]},
     {path: "/register", name: "register", component: RegisterView},
     {path: "/login", name: "login", component: LoginView},
