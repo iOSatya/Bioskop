@@ -37,7 +37,7 @@ class MovieController extends Controller
 
             for ($row = 1; $row <= $theatre["rows"]; $row++) {
                 for ($column = 1; $column <= $theatre["columns"]; $column++) {
-                    $data["seats"][$row][$column] = false;
+                    $data["seats"][$row][$column] = true;
                 }
             }
 
@@ -53,15 +53,15 @@ class MovieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(Movie $movie)
     {
-        //
+        return response()->json(["movie" => $movie], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, Movie $movie)
     {
         //
     }
@@ -69,7 +69,7 @@ class MovieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy(Movie $movie)
     {
         //
     }

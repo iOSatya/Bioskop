@@ -40,7 +40,7 @@ class TheatreController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(Theatre $theatre)
     {
         //
     }
@@ -48,7 +48,7 @@ class TheatreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, Theatre $theatre)
     {
         //
     }
@@ -56,7 +56,7 @@ class TheatreController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy(Theatre $theatre)
     {
         //
     }
