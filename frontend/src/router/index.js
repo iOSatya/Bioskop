@@ -17,9 +17,20 @@ const router = createRouter({
   routes: [
     {path: '/', name: 'home', component: HomeView},
     {path: "/movies", children: [
-      {path: "", name: "movies", component: MoviesView},
-      {path: "order/:id", name: "movies-order", props: true, component: OrderMovieView}
-    ]},
+      {
+        path: '',
+        name: 'movies',
+        component: MoviesView,
+      },
+      {
+        path: 'order/:id',
+        name: 'movies-order',
+        props: true,
+        component: OrderMovieView,
+        meta: { requiresAuth: true }, // Proteksi halaman pemesanan
+      },
+    ],
+  },
     {path: "/register", name: "register", component: RegisterView},
     {path: "/login", name: "login", component: LoginView},
     {path: "/unauthorized", name: "unauthorized", component: UnauthorizedView},
