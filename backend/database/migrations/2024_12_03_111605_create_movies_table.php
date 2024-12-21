@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("genre");
             $table->unsignedTinyInteger("start");
             $table->unsignedTinyInteger("end");
+            $table->integer("price");
             $table->jsonb("seats");
             $table->timestamps();
         });

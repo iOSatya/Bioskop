@@ -16,8 +16,7 @@
 
 <script setup>
 
-  import useAuthStore from '@/stores/auth';
-import useLoadingStore from '@/stores/loading';
+  import useLoadingStore from '@/stores/loading';
   import { ref } from 'vue';
 
   const name = ref("");

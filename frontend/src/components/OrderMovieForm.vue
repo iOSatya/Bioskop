@@ -1,19 +1,28 @@
 <template>
   
-  <div>
-    <div v-for="(row, rowIndex) in movie.seats" class="flex flex-row">
-      <div v-for="(column, columnIndex) in row">
-        <div @click="selectSeat(rowIndex, columnIndex)" :class="{'bg-green-500': column, 'bg-red-500': !column}" class="w-8 h-8 m-1 select" style="color: var(--darker);"></div>
+  <form @submit.prevent="submitOrderMovie" class="flex flex-row w-screen">
+    <div class="flex flex-col justify-center items-center w-1/2 p-8">
+      <div v-for="(row, rowIndex) in movie.seats" class="flex flex-row">
+        <div v-for="(column, columnIndex) in row">
+          <div @click="selectSeat(rowIndex, columnIndex)" class="w-8 h-8 m-1 select" :class="seatColor(rowIndex, columnIndex)" style="color: var(--darker);"></div>
+        </div>
       </div>
     </div>
-  </div>
+    <div class="flex flex-col justify-center items-center w-1/2 p-24">
+      <p class="font-bold text-2xl mb-4">{{ movie.title }} - Rp{{ price }}</p>
+      <p class="font-bold text-2xl self-start mb-4">Total : Rp{{ total }}</p>
+      <hr class="self-stretch mb-4">
+      <button class="button self-stretch" style="border: 1px white solid;">Order</button>
+    </div>
+  </form>
+
 
 </template>
 
 <script setup>
   
   import useLoadingStore from '@/stores/loading';
-  import { onMounted, ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
 
   const props = defineProps({
     id: String
@@ -26,7 +35,8 @@
   const loadingStore = useLoadingStore();
 
   const movie = ref([]);
-  const selectedSeats = [];
+  const price = ref(0);
+  const ordered = ref(0);
 
   async function getMovieById() {
     loadingStore.startLoading();
@@ -37,6 +47,33 @@
       });
       const responseData = await response.json();
       movie.value = responseData["movie"];
+      price.value = responseData["movie"]["price"];
+    } catch (error) {
+      console.log(error);
+    }
+    loadingStore.endLoading();
+  }
+
+  function grabOrderMovie() {
+    return JSON.stringify({
+      seats: movie.value.seats
+    });
+  }
+
+  function sendOrderMovie(data) {
+    return fetch(`http://127.0.0.1:8000/api/movies/${props.id}`, {
+      method: "PUT",
+      headers: {"Content-Type": "application/json"},
+      body: data
+    });
+  }
+
+  async function submitOrderMovie() {
+    loadingStore.startLoading();
+    try {
+      const response = await sendOrderMovie(grabOrderMovie());
+      const responseData = await response.json();
+      console.log(responseData);
     } catch (error) {
       console.log(error);
     }
@@ -44,8 +81,31 @@
   }
 
   function selectSeat(row, column) {
-    console.log(row, column)
+    if (movie.value.seats[row][column] === "selected") {
+      movie.value.seats[row][column] = true;
+      ordered.value -= 1;
+    } else if (movie.value.seats[row][column]) {
+      movie.value.seats[row][column] = "selected";
+      ordered.value += 1;
+    }
   }
+
+  const seatColor = computed(() => {
+    return (row, column) => {
+      const seatValue = movie.value.seats[row][column];
+      if (seatValue === "selected") {
+        return 'bg-yellow-500';
+      } else if (!seatValue) {
+        return 'bg-red-500';
+      } else if (seatValue) {
+        return 'bg-green-500';
+      }
+    }
+  });
+
+  const total = computed(() => {
+    return price.value * ordered.value;
+  });
 
 </script>
 

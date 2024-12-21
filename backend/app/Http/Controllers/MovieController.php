@@ -29,6 +29,7 @@ class MovieController extends Controller
                 "genre" => ["required"],
                 "start" => ["required"],
                 "end" => ["required"],
+                "price" => ["required"]
             ]);
 
             $theatre = Theatre::where("id", $request->theatre_id)->first();
@@ -63,7 +64,15 @@ class MovieController extends Controller
      */
     public function update(Request $request, Movie $movie)
     {
-        //
+        $data = $request["seats"];
+        foreach ($data as $rowIndex => $row) {
+            foreach ($row as $columnIndex => $column) {
+                if ($column === "selected") {
+                    $data[$rowIndex][$columnIndex] = false;
+                }
+            }
+        }
+        return response()->json($data);
     }
 
     /**

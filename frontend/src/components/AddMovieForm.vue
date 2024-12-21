@@ -28,6 +28,8 @@
           <input v-model="end" type="number" min="6" max="22" class="form-control">
         </div>
       </div>
+      <label style="color: var(--secondary);">Price</label>
+      <input v-model="price" type="text" class="form-control mb-4">
       <button class="button" style="border: 1px var(--lighter) solid;">Submit</button>
     </form>
   </div>
@@ -54,6 +56,7 @@
   const genre = ref("");
   const start = ref(6);
   const end = ref(6);
+  const price = ref("");
 
   const theatreList = ref([]);
   
@@ -79,7 +82,8 @@
       title: title.value,
       genre: genre.value,
       start: start.value,
-      end: end.value
+      end: end.value,
+      price: price.value
     });
   }
 
