@@ -44,11 +44,10 @@
         headers: {"Accept": "application/json", "Authorization": `Bearer ${authStore.token}`}
       });
 
-      if (response.ok) {
-        authStore.setToken(null);
-        authStore.setAccountStatus(null);
-        router.push({name: "home"});
-      }
+      authStore.setToken(null);
+      authStore.setAccountStatus(null);
+      router.push({name: "home"});
+
     } catch (error) {
       console.log(error);
     }
