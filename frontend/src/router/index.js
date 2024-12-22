@@ -19,11 +19,6 @@ const router = createRouter({
   routes: [
     {path: '/', name: 'home', component: HomeView},
     {path: "/movies", children: [
-      {path: "", name: "movies", component: MoviesView},
-      {path: "order/:id", name: "movies-order", props: true, component: OrderMovieView}
-    ]},
-    {path: "/tickets", name: "tickets", component: TicketsView},
-    {path: "/order-success", name: "order-success", component: OrderSuccessView},
 
     {path: "/register", name: "register", component: RegisterView},
     {path: "/login", name: "login", component: LoginView},
