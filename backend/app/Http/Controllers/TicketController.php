@@ -61,11 +61,17 @@ class TicketController extends Controller
         $movie_id = $request->movie_id;
         $seats = $request->ordered_seats;
 
-        $data = [
-            "user_id" => $user_id,
-            "movie_id" => $movie_id,
-            "seats" => $seats
-        ];
+        foreach ($seats as $seat) {
+            $data = [
+                "user_id" => $user_id,
+                "movie_id" => $movie_id,
+                "seat" => $seat
+            ];
+
+            Ticket::create($data);
+        }
+
+
 
         return response()->json(["data" => $data]);
     }

@@ -93,14 +93,9 @@ import useAuthStore from '@/stores/auth';
     loadingStore.startLoading();
     try {
       if (ordered.value !== 0) {
-        const response = await sendOrderMovie(grabOrderMovie());
-        const responseData = await response.json();
-
-        const response2 = await sendTicket(grabTicket());
-        const responseData2 = await response2.json();
-
-        console.log(responseData2);
-        // router.push({name: "order-success"});
+        await sendOrderMovie(grabOrderMovie());
+        await sendTicket(grabTicket());
+        router.push({name: "order-success"});
       }
     } catch (error) {
       console.log(error);
