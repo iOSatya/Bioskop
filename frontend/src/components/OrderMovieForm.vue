@@ -9,8 +9,8 @@
       </div>
     </div>
     <div class="flex flex-col justify-center items-center w-1/2 p-24">
-      <p class="font-bold text-2xl mb-4">{{ movie.title }} - Rp{{ price }}</p>
-      <p class="font-bold text-2xl self-start mb-4">Total : Rp{{ total }}</p>
+      <p class="font-bold text-2xl mb-4">{{ movie.title }} - Rp. {{ price }}</p>
+      <p class="font-bold text-2xl self-start mb-4">Total : Rp. {{ total }}</p>
       <hr class="self-stretch mb-4">
       <button class="button self-stretch" style="border: 1px white solid;">Order</button>
     </div>
