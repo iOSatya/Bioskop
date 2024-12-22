@@ -22,7 +22,7 @@
 <script setup>
   
   import router from '@/router';
-import useAuthStore from '@/stores/auth';
+  import useAuthStore from '@/stores/auth';
   import useLoadingStore from '@/stores/loading';
   import { computed, onMounted, ref } from 'vue';
 
@@ -113,7 +113,6 @@ import useAuthStore from '@/stores/auth';
       ordered.value += 1;
       orderedSeats.push(`${row}-${column}`);
     }
-    console.log(orderedSeats);
   }
 
   const seatColor = computed(() => {

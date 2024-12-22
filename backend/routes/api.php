@@ -16,3 +16,4 @@ Route::apiResource("movies", MovieController::class);
 Route::put("/movies-order", [MovieController::class, "order"]);
 
 Route::post("/tickets-order", [TicketController::class, "order"])->middleware("auth:sanctum");
+Route::post("/tickets-user", [TicketController::class, "userTicket"])->middleware("auth:sanctum");

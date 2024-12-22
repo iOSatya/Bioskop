@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId("user_id")->constrained()->cascadeOnDelete();
             $table->foreignId("movie_id")->constrained()->cascadeOnDelete();
             $table->string("seat");
+            $table->string("title");
+            $table->string("theatre_name");
             $table->timestamps();
         });
     }
