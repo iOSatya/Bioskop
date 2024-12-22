@@ -10,6 +10,7 @@ import AddMovieView from '@/views/AddMovieView.vue'
 import MoviesView from '@/views/MoviesView.vue'
 import OrderMovieView from '@/views/OrderMovieView.vue'
 import TicketsView from '@/views/TicketsView.vue'
+import OrderSuccessView from '@/views/OrderSuccessView.vue'
 
 const authStore = () => useAuthStore();
 
@@ -22,6 +23,7 @@ const router = createRouter({
       {path: "order/:id", name: "movies-order", props: true, component: OrderMovieView}
     ]},
     {path: "/tickets", name: "tickets", component: TicketsView},
+    {path: "/order-success", name: "order-success", component: OrderSuccessView},
 
     {path: "/register", name: "register", component: RegisterView},
     {path: "/login", name: "login", component: LoginView},

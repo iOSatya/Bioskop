@@ -21,7 +21,8 @@
 
 <script setup>
   
-  import useLoadingStore from '@/stores/loading';
+  import router from '@/router';
+import useLoadingStore from '@/stores/loading';
   import { computed, onMounted, ref } from 'vue';
 
   const props = defineProps({
@@ -72,9 +73,11 @@
   async function submitOrderMovie() {
     loadingStore.startLoading();
     try {
-      const response = await sendOrderMovie(grabOrderMovie());
-      const responseData = await response.json();
-      console.log(responseData);
+      if (ordered.value !== 0) {
+        const response = await sendOrderMovie(grabOrderMovie());
+        const responseData = await response.json();
+        router.push({name: "order-success"});
+      }
     } catch (error) {
       console.log(error);
     }
