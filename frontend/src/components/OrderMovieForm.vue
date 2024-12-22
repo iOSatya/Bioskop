@@ -22,7 +22,8 @@
 <script setup>
   
   import router from '@/router';
-import useLoadingStore from '@/stores/loading';
+import useAuthStore from '@/stores/auth';
+  import useLoadingStore from '@/stores/loading';
   import { computed, onMounted, ref } from 'vue';
 
   const props = defineProps({
@@ -38,6 +39,9 @@ import useLoadingStore from '@/stores/loading';
   const movie = ref([]);
   const price = ref(0);
   const ordered = ref(0);
+  let orderedSeats = [];
+
+  const authStore = useAuthStore();
 
   async function getMovieById() {
     loadingStore.startLoading();
@@ -70,13 +74,33 @@ import useLoadingStore from '@/stores/loading';
     });
   }
 
+  function grabTicket() {
+    return JSON.stringify({
+      movie_id: props.id,
+      ordered_seats: orderedSeats
+    });
+  }
+
+  function sendTicket(data) {
+    return fetch(`http://127.0.0.1:8000/api/tickets-order`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json", "Accept": "application/json", "Authorization": `Bearer ${authStore.token}`},
+      body: data
+    })
+  }
+
   async function submitOrderMovie() {
     loadingStore.startLoading();
     try {
       if (ordered.value !== 0) {
         const response = await sendOrderMovie(grabOrderMovie());
         const responseData = await response.json();
-        router.push({name: "order-success"});
+
+        const response2 = await sendTicket(grabTicket());
+        const responseData2 = await response2.json();
+
+        console.log(responseData2);
+        // router.push({name: "order-success"});
       }
     } catch (error) {
       console.log(error);
@@ -88,10 +112,13 @@ import useLoadingStore from '@/stores/loading';
     if (movie.value.seats[row][column] === "selected") {
       movie.value.seats[row][column] = true;
       ordered.value -= 1;
+      orderedSeats = orderedSeats.filter(item => item !== `${row}-${column}`);
     } else if (movie.value.seats[row][column]) {
       movie.value.seats[row][column] = "selected";
       ordered.value += 1;
+      orderedSeats.push(`${row}-${column}`);
     }
+    console.log(orderedSeats);
   }
 
   const seatColor = computed(() => {
