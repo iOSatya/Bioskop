@@ -1,7 +1,16 @@
 <template>
 
-  <div v-for="(ticket, ticketIndex) in tickets">
-    {{ ticket["title"] }} {{ ticket["theatre_name"] }}
+  <div v-for="(ticket, ticketIndex) in tickets" class="flex flex-row w-full mb-4 p-8" style="border: 1px var(--lighter) solid;">
+    <div class="flex flex-col w-1/2">
+      <p>Ticket ID : {{ ticket["id"] }}</p>
+      <hr class="mt-4 mb-4">
+      <p>{{ ticket["title"] }}</p>
+      
+    </div>
+    <div class="flex flex-col w-1/2 items-end">
+      <p class="font-semibold text-xl">{{ ticket["theatre_name"] }}</p>
+      <p class="font-bold text-5xl">{{ ticket["seat"] }}</p>
+    </div>
   </div>
 
 </template>
