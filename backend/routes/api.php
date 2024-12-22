@@ -17,6 +17,7 @@ Route::apiResource("movies", MovieController::class);
 
 Route::get('/movies', [MovieController::class, 'index']);
 Route::get('/movies/{id}', [MovieController::class, 'show']);
+Route::get('/movies/genre/{genre}', [MovieController::class, 'getMoviesByGenre']);
 
 Route::get('/movies/{id}/seats', [SeatController::class, 'index']);
 Route::get('/seats/{id}', [SeatController::class, 'show']);

@@ -11,7 +11,7 @@
         <h1 class="text-2xl font-bold">{{ movie.title }}</h1>
         <p class="mt-2 text-gray-300">{{ movie.synopsis }}</p>
         <p class="mt-4 text-sm text-gray-400">
-          <strong>Rating:</strong> {{ movie.rating }} | <strong>Duration:</strong> {{ movie.duration }} mins
+          <strong>Category :</strong> {{ movie.category }} | <strong>Duration:</strong> {{ movie.duration }} mins
         </p>
       </div>
     </div>
