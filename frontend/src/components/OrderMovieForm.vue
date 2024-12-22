@@ -56,12 +56,13 @@
 
   function grabOrderMovie() {
     return JSON.stringify({
+      id: props.id,
       seats: movie.value.seats
     });
   }
 
   function sendOrderMovie(data) {
-    return fetch(`http://127.0.0.1:8000/api/movies/${props.id}`, {
+    return fetch(`http://127.0.0.1:8000/api/movies-order`, {
       method: "PUT",
       headers: {"Content-Type": "application/json"},
       body: data

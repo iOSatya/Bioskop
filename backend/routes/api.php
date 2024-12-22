@@ -12,3 +12,4 @@ Route::post("/logout", [AuthController::class, "logout"])->middleware("auth:sanc
 
 Route::apiResource("theatres", TheatreController::class);
 Route::apiResource("movies", MovieController::class);
+Route::put("/movies-order", [MovieController::class, "order"]);

@@ -64,15 +64,7 @@ class MovieController extends Controller
      */
     public function update(Request $request, Movie $movie)
     {
-        $data = $request["seats"];
-        foreach ($data as $rowIndex => $row) {
-            foreach ($row as $columnIndex => $column) {
-                if ($column === "selected") {
-                    $data[$rowIndex][$columnIndex] = false;
-                }
-            }
-        }
-        return response()->json($data);
+
     }
 
     /**
@@ -81,5 +73,26 @@ class MovieController extends Controller
     public function destroy(Movie $movie)
     {
         //
+    }
+
+    public function order(Request $request)
+    {
+        $seats = $request["seats"];
+        $id = $request["id"];
+        foreach ($seats as $rowIndex => $row) {
+            foreach ($row as $columnIndex => $column) {
+                if ($column === "selected") {
+                    $seats[$rowIndex][$columnIndex] = false;
+                }
+            }
+        }
+
+        $data = [
+            "seats" => $seats
+        ];
+
+        Movie::where("id", $id)->update($data);
+
+        return response()->json($seats);
     }
 }
