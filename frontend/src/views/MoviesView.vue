@@ -17,7 +17,7 @@
             <!-- Poster Image with aspect-ratio for shape adjustment -->
             <img :src="'http://localhost:8000/' + movie.poster" :alt="movie.title" class="poster-image" />
             <p class="mt-2 text-lg font-semibold text-white">{{ movie.title }}</p>
-            <p class="text-sm text-gray-400">{{ movie.category }}</p>
+            <p class="text-sm text-gray-400">⭐ {{ movie.rating }}</p>
 
             <!-- Movie Timing and Order Button -->
             <div class="flex flex-row justify-start items-center w-full mt-2">
@@ -108,10 +108,11 @@ body {
   transform: scale(1.05);
 }
 
+/* Poster Image */
 .poster-image {
   aspect-ratio: 2 / 3; /* Tetap menjaga rasio 2:3 */
-  width: 100%; /* Menggunakan 100% dari card container */
-  object-fit: cover; /* Mencegah gambar terlihat gepeng */
+  width: 100%;
+  height: auto;
   border-radius: 8px;
 }
 

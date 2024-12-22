@@ -84,15 +84,6 @@ class MovieController extends Controller
         }
     }
 
-    public function getMoviesByGenre($genre)
-    {
-        // Mengambil film berdasarkan genre
-        $movies = Movie::where('category', $genre)
-            ->take(10) // Membatasi hanya 10 film
-            ->get(['id', 'title', 'poster']); // Mengambil hanya kolom yang dibutuhkan
-
-        return response()->json($movies); // Mengembalikan hasil dalam format JSON
-    }
     public function createOrder(Request $request)
     {
 
