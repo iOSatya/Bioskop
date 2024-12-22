@@ -21,6 +21,8 @@
 
 <script setup>
   
+  import router from '@/router';
+  import useAuthStore from '@/stores/auth';
   import useLoadingStore from '@/stores/loading';
   import { computed, onMounted, ref } from 'vue';
 
@@ -37,6 +39,9 @@
   const movie = ref([]);
   const price = ref(0);
   const ordered = ref(0);
+  let orderedSeats = [];
+
+  const authStore = useAuthStore();
 
   async function getMovieById() {
     loadingStore.startLoading();
@@ -56,24 +61,42 @@
 
   function grabOrderMovie() {
     return JSON.stringify({
+      id: props.id,
       seats: movie.value.seats
     });
   }
 
   function sendOrderMovie(data) {
-    return fetch(`http://127.0.0.1:8000/api/movies/${props.id}`, {
+    return fetch(`http://127.0.0.1:8000/api/movies-order`, {
       method: "PUT",
       headers: {"Content-Type": "application/json"},
       body: data
     });
   }
 
+  function grabTicket() {
+    return JSON.stringify({
+      movie_id: props.id,
+      ordered_seats: orderedSeats
+    });
+  }
+
+  function sendTicket(data) {
+    return fetch(`http://127.0.0.1:8000/api/tickets-order`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json", "Accept": "application/json", "Authorization": `Bearer ${authStore.token}`},
+      body: data
+    })
+  }
+
   async function submitOrderMovie() {
     loadingStore.startLoading();
     try {
-      const response = await sendOrderMovie(grabOrderMovie());
-      const responseData = await response.json();
-      console.log(responseData);
+      if (ordered.value !== 0) {
+        await sendOrderMovie(grabOrderMovie());
+        await sendTicket(grabTicket());
+        router.push({name: "order-success"});
+      }
     } catch (error) {
       console.log(error);
     }
@@ -84,9 +107,11 @@
     if (movie.value.seats[row][column] === "selected") {
       movie.value.seats[row][column] = true;
       ordered.value -= 1;
+      orderedSeats = orderedSeats.filter(item => item !== `${row}-${column}`);
     } else if (movie.value.seats[row][column]) {
       movie.value.seats[row][column] = "selected";
       ordered.value += 1;
+      orderedSeats.push(`${row}-${column}`);
     }
   }
 

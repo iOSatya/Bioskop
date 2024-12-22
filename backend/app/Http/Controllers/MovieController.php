@@ -67,21 +67,6 @@ class MovieController extends Controller
     public function showtimes($movie_id)
     {
 
-        $movie = Movie::find($movie_id);
-
-        if (!$movie) {
-            return response()->json(['message' => 'Movie not found'], 404);
-        }
-
-        try {
-            $showtimes = Schedule::where('movie_id', $movie_id)
-                ->with('room')
-                ->get();
-
-            return response()->json(['showtimes' => $showtimes]);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Error fetching showtimes', 'error' => $e->getMessage()], 500);
-        }
     }
 
     public function createOrder(Request $request)
@@ -120,5 +105,26 @@ class MovieController extends Controller
             'message' => 'Order created successfully',
             'order' => $order
         ], 201);
+    }
+
+    public function order(Request $request)
+    {
+        $seats = $request["seats"];
+        $id = $request["id"];
+        foreach ($seats as $rowIndex => $row) {
+            foreach ($row as $columnIndex => $column) {
+                if ($column === "selected") {
+                    $seats[$rowIndex][$columnIndex] = false;
+                }
+            }
+        }
+
+        $data = [
+            "seats" => $seats
+        ];
+
+        Movie::where("id", $id)->update($data);
+
+        return response()->json($seats);
     }
 }

@@ -6,9 +6,10 @@
       <div v-if="authStore.accountStatus !== 'admin'" class="me-auto">
         <RouterLink :to="{name: 'home'}" class="nav-button">Home</RouterLink>
         <RouterLink :to="{name: 'movies'}" class="nav-button">Movies</RouterLink>
+        <RouterLink v-if="authStore.accountStatus === 'customer'" :to="{name: 'tickets'}" class="nav-button">Tickets</RouterLink>
       </div>
 
-      <div v-else-if="authStore.accountStatus == 'admin'" class="me-auto">
+      <div v-else-if="authStore.accountStatus === 'admin'" class="me-auto">
         <RouterLink :to="{name: 'admin-home'}" class="nav-button">Home</RouterLink>
         <RouterLink :to="{name: 'add'}" class="nav-button">Add</RouterLink>
       </div>
