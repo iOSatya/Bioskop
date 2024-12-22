@@ -4,24 +4,31 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMoviesTable extends Migration
+return new class extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('poster'); // Path gambar poster
-            $table->decimal('rating', 3, 1);
-            $table->text('synopsis');
-            $table->integer('duration'); // Durasi dalam menit
-            $table->string('category'); // Kategori film
+            $table->foreignId("theatre_id")->constrained()->cascadeOnDelete();
+            $table->string("title");
+            $table->string("genre");
+            $table->unsignedTinyInteger("start");
+            $table->unsignedTinyInteger("end");
+            $table->integer("price");
+            $table->jsonb("seats");
             $table->timestamps();
         });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::dropIfExists('movies');
     }
-}
+};
