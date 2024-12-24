@@ -14,8 +14,12 @@
             <p class="font-semibold">Jam Tayang : {{ movie.start }}.00 - {{ movie.end }}.00</p>
             <p class="font-semibold">Harga : Rp. {{ movie.price }}</p>
           </div>
-
-          <button @click="deleteMovie(movie.id)" class="rounded-b-xl p-4 text-center" style="border: 1px solid var(--red); color: var(--red);">Delete</button>
+          
+          <div class="flex flex-row">
+            <RouterLink :to="{name: 'edit-movie', params: {id: movie.id}}" class="p-4 text-center w-1/2 me-1 glow" style="border: 1px solid var(--yellow); color: var(--yellow);">Edit</RouterLink>
+            <button @click="deleteMovie(movie.id)" class="p-4 text-center w-1/2 glow" style="border: 1px solid var(--red); color: var(--red);">Delete</button>
+          </div>
+          
 
         </swiper-slide>
       </swiper-container>
@@ -29,6 +33,7 @@
 
   import useLoadingStore from '@/stores/loading';
   import { onMounted, ref } from 'vue';
+  import { RouterLink } from 'vue-router';
 
   onMounted(() => {
     getMovieList();
@@ -65,3 +70,11 @@
   }
 
 </script>
+
+<style scoped>
+
+  .glow:hover {
+    filter: brightness(1.5);
+  }
+
+</style>

@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div class="flex flex-col justify-center p-12">
     <form @submit.prevent="submitMovieForm" class="flex flex-col justify-center">
       <label style="color: var(--secondary);">Title</label>
       <input v-model="title" type="text" class="form-control mb-4">
@@ -11,11 +11,6 @@
         <p v-if="genreOpen" @click="() => {genreOpen = !genreOpen; genre = 'Action'}" class="form-control select">Action</p>
         <p v-if="genreOpen" @click="() => {genreOpen = !genreOpen; genre = 'Comedy'}" class="form-control select">Comedy</p>
         <p v-if="genreOpen" @click="() => {genreOpen = !genreOpen; genre = 'Horror'}" class="form-control select">Horror</p>
-      </div>
-      <label style="color: var(--secondary);">Theatre</label>
-      <div class="mb-4">
-        <p @click="theatreOpen = !theatreOpen" class="form-control select">{{ theatreName || "Select" }}</p>
-        <p v-for="theatre in theatreList" v-if="theatreOpen" :key="theatre.id" @click="() => {theatreOpen = !theatreOpen; theatre_id = theatre.id; theatreName = theatre.theatre_name}" class="form-control select">{{ theatre.theatre_name }}</p>
       </div>
 
       <div class="flex flex-row justify-stretch mb-4">
@@ -30,7 +25,7 @@
       </div>
       <label style="color: var(--secondary);">Price</label>
       <input v-model="price" type="text" class="form-control mb-4">
-      <button class="button" style="border: 1px var(--lighter) solid;">Submit</button>
+      <button class="button" style="border: 1px var(--lighter) solid;">Edit</button>
     </form>
   </div>
 
@@ -39,37 +34,39 @@
 <script setup>
 
   import useLoadingStore from '@/stores/loading';
-  import { onMounted, ref } from 'vue';
+  import { ref } from 'vue';
+  import { onMounted } from 'vue';
 
-  onMounted(() => {
-    getTheatreList();
-  })
+  const props = defineProps({
+    id: String
+  });
 
   const loadingStore = useLoadingStore();
-
   const genreOpen = ref(false);
-  const theatreOpen = ref(false);
 
-  const theatre_id = ref("");
   const title = ref("");
   const genre = ref("");
-  const theatreName = ref("");
   const start = ref(6);
   const end = ref(6);
   const price = ref("");
 
-  const theatreList = ref([]);
-  
+  onMounted(() => {
+    getMovieById();
+  });
 
-  async function getTheatreList() {
+  async function getMovieById() {
     loadingStore.startLoading();
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/theatres", {
+      const response = await fetch(`http://127.0.0.1:8000/api/movies/${props.id}`, {
         method: "GET",
         headers: {"Accept": "application/json"}
       });
       const responseData = await response.json();
-      theatreList.value = responseData.theatres;
+      title.value = responseData["movie"]["title"];
+      genre.value = responseData["movie"]["genre"];
+      start.value = responseData["movie"]["start"];
+      end.value = responseData["movie"]["end"];
+      price.value = responseData["movie"]["price"];
     } catch (error) {
       console.log(error);
     }
@@ -78,7 +75,6 @@
 
   function grabMovieForm() {
     return JSON.stringify({
-      theatre_id: theatre_id.value,
       title: title.value,
       genre: genre.value,
       start: start.value,
@@ -88,8 +84,8 @@
   }
 
   function sendMovieForm(data) {
-    return fetch("http://127.0.0.1:8000/api/movies", {
-      method: "POST",
+    return fetch(`http://127.0.0.1:8000/api/movies/${props.id}`, {
+      method: "PATCH",
       headers: {"Content-Type": "application/json"},
       body: data
     });
@@ -108,16 +104,3 @@
   }
 
 </script>
-
-<style scoped>
-
-  .select {
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .select:hover {
-    filter: brightness(2);
-  }
-  
-</style>

@@ -11,6 +11,7 @@ import MoviesView from '@/views/MoviesView.vue'
 import OrderMovieView from '@/views/OrderMovieView.vue'
 import TicketsView from '@/views/TicketsView.vue'
 import OrderSuccessView from '@/views/OrderSuccessView.vue'
+import EditMovieView from '@/views/EditMovieView.vue'
 
 const authStore = () => useAuthStore();
 
@@ -34,6 +35,9 @@ const router = createRouter({
       {path: "add", name: "add", redirect: {name: "add-theatre"}, children: [
         {path: "theatre", name: "add-theatre", component: AddTheatreView},
         {path: "movie", name: "add-movie", component: AddMovieView}
+      ]},
+      {path: "edit", children: [
+        {path: "movie/:id", name: "edit-movie", props: true, component: EditMovieView}
       ]}
     ]}
   ],
@@ -44,7 +48,9 @@ router.beforeEach((to, from, next) => {
   // Cek user apakah punya otoritas untuk akses "/admin"
   if (to.meta.adminAuth) {
     if (authStore().accountStatus == "admin") {
+
       next();
+      
     } else {
       next({name: "unauthorized"});
     }

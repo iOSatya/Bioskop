@@ -64,7 +64,17 @@ class MovieController extends Controller
      */
     public function update(Request $request, Movie $movie)
     {
+        
+        $data = $request->validate([
+            "title" => ["required"],
+            "genre" => ["required"],
+            "start" => ["required"],
+            "end" => ["required"],
+            "price" => ["required"]
+        ]);
 
+        $movie->update($data);
+        return response()->json(["message" => "Movie Edit Successful"], 201);
     }
 
     /**
